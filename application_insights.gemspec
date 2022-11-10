@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'azure_application_insights/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'azure_azure_application_insights'
+  spec.name          = 'azure_application_insights'
   spec.version       = AzureApplicationInsights::VERSION
   spec.authors       = ['Daniel Blasina']
   spec.email         = ['blzk100@gmail.com']
