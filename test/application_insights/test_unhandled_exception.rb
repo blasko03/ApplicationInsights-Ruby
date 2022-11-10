@@ -1,8 +1,8 @@
 require 'test/unit'
 require_relative 'mock_sender'
-require_relative '../../lib/application_insights/unhandled_exception'
+require_relative '../../lib/azure_application_insights/unhandled_exception'
 
-include ApplicationInsights
+include AzureApplicationInsights
 
 class TestUnhandledException < Test::Unit::TestCase
   def test_send

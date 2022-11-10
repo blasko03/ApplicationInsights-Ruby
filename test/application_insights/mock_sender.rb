@@ -1,7 +1,7 @@
-require_relative '../../lib/application_insights/channel/synchronous_sender'
-require_relative '../../lib/application_insights/channel/asynchronous_sender'
+require_relative '../../lib/azure_application_insights/channel/synchronous_sender'
+require_relative '../../lib/azure_application_insights/channel/asynchronous_sender'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class MockSynchronousSender < SynchronousSender
   def initialize

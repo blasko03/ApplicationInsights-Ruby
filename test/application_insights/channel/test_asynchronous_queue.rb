@@ -1,9 +1,9 @@
-require_relative '../../../lib/application_insights/channel/sender_base'
-require_relative '../../../lib/application_insights/channel/asynchronous_queue'
+require_relative '../../../lib/azure_application_insights/channel/sender_base'
+require_relative '../../../lib/azure_application_insights/channel/asynchronous_queue'
 require_relative '../mock_sender'
 require 'test/unit'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class TestAsynchronousQueue < Test::Unit::TestCase
   def test_initialize

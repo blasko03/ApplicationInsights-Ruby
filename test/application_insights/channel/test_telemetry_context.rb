@@ -1,7 +1,7 @@
-require_relative '../../../lib/application_insights/channel/telemetry_context'
+require_relative '../../../lib/azure_application_insights/channel/telemetry_context'
 require 'test/unit'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class TestTelemetryContext < Test::Unit::TestCase
   def test_initialize

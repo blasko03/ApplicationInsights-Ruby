@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'application_insights/version'
+require 'azure_application_insights/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'azure_application_insights'
-  spec.version       = ApplicationInsights::VERSION
+  spec.name          = 'azure_azure_application_insights'
+  spec.version       = AzureApplicationInsights::VERSION
   spec.authors       = ['Daniel Blasina']
   spec.email         = ['blzk100@gmail.com']
   spec.summary       = %q{Forked Application Insights SDK for Ruby}
   spec.description   = %q{This project extends the Application Insights API surface to support Ruby.}
-  spec.homepage      = 'https://github.com/blasko03/ApplicationInsights-Ruby/'
+  spec.homepage      = 'https://github.com/blasko03/AzureApplicationInsights-Ruby/'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")

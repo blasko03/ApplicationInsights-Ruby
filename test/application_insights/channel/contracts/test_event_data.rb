@@ -1,7 +1,7 @@
-require_relative '../../../../lib/application_insights/channel/contracts/event_data'
+require_relative '../../../../lib/azure_application_insights/channel/contracts/event_data'
 require 'test/unit'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class TestEventData < Test::Unit::TestCase
   def test_initialize

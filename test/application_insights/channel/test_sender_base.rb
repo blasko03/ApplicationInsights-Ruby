@@ -1,11 +1,11 @@
-require_relative '../../../lib/application_insights/channel/queue_base'
-require_relative '../../../lib/application_insights/channel/sender_base'
+require_relative '../../../lib/azure_application_insights/channel/queue_base'
+require_relative '../../../lib/azure_application_insights/channel/sender_base'
 require_relative '../test_logger'
 require 'socket'
 require 'test/unit'
 require 'thread'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class TestSenderBase < Test::Unit::TestCase
   def test_initialize

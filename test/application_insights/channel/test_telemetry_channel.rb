@@ -1,11 +1,11 @@
-require_relative '../../../lib/application_insights/channel/telemetry_channel'
-require_relative '../../../lib/application_insights/channel/telemetry_context'
-require_relative '../../../lib/application_insights/channel/synchronous_queue'
-require_relative '../../../lib/application_insights/channel/synchronous_sender'
+require_relative '../../../lib/azure_application_insights/channel/telemetry_channel'
+require_relative '../../../lib/azure_application_insights/channel/telemetry_context'
+require_relative '../../../lib/azure_application_insights/channel/synchronous_queue'
+require_relative '../../../lib/azure_application_insights/channel/synchronous_sender'
 require 'test/unit'
 require 'time'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class TestTelemetryChannel < Test::Unit::TestCase
   def test_initialize
@@ -62,12 +62,12 @@ class TestTelemetryChannel < Test::Unit::TestCase
     assert_not_nil actual
     assert_equal 1, actual.ver
     assert_equal 100, actual.sample_rate
-    assert_equal 'Microsoft.ApplicationInsights.MockTelemetryItem', actual.name
+    assert_equal 'Microsoft.AzureApplicationInsights.MockTelemetryItem', actual.name
     assert_not_nil actual.time
     assert_equal 'instrumentation key', actual.i_key
     assert_not_nil actual.tags
     assert_equal 1, actual.tags.count
-    assert_equal 'rb:'+ ApplicationInsights::VERSION, actual.tags['ai.internal.sdkVersion']
+    assert_equal 'rb:'+ AzureApplicationInsights::VERSION, actual.tags['ai.internal.sdkVersion']
     assert_not_nil actual.data
     assert_equal 'MockTelemetryItemData', actual.data.base_type
     assert_same expected, actual.data.base_data
@@ -129,7 +129,7 @@ class TestTelemetryChannel < Test::Unit::TestCase
 
     assert_equal 1, queue.queue.count
     tags = queue.queue[0].tags
-    assert_equal 'rb:'+ ApplicationInsights::VERSION, tags['ai.internal.sdkVersion']
+    assert_equal 'rb:'+ AzureApplicationInsights::VERSION, tags['ai.internal.sdkVersion']
     assert_equal 'ver', tags['ai.application.ver']
     assert_equal 'role name', tags['ai.cloud.role']
     assert_equal 'device id', tags['ai.device.id']

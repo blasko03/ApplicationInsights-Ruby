@@ -1,7 +1,7 @@
-require_relative '../../../../lib/application_insights/channel/contracts/page_view_data'
+require_relative '../../../../lib/azure_application_insights/channel/contracts/page_view_data'
 require 'test/unit'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class TestPageViewData < Test::Unit::TestCase
   def test_initialize

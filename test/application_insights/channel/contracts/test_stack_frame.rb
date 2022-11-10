@@ -1,7 +1,7 @@
-require_relative '../../../../lib/application_insights/channel/contracts/stack_frame'
+require_relative '../../../../lib/azure_application_insights/channel/contracts/stack_frame'
 require 'test/unit'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class TestStackFrame < Test::Unit::TestCase
   def test_initialize

@@ -1,7 +1,7 @@
-require_relative '../../../lib/application_insights/channel/synchronous_sender'
+require_relative '../../../lib/azure_application_insights/channel/synchronous_sender'
 require 'test/unit'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class TestSynchronousSender < Test::Unit::TestCase
   def test_initialize

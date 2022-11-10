@@ -1,12 +1,12 @@
-require_relative '../../lib/application_insights/telemetry_client'
-require_relative '../../lib/application_insights/channel/sender_base'
-require_relative '../../lib/application_insights/channel/synchronous_queue'
-require_relative '../../lib/application_insights/channel/telemetry_channel'
+require_relative '../../lib/azure_application_insights/telemetry_client'
+require_relative '../../lib/azure_application_insights/channel/sender_base'
+require_relative '../../lib/azure_application_insights/channel/synchronous_queue'
+require_relative '../../lib/azure_application_insights/channel/telemetry_channel'
 require 'json'
 require 'test/unit'
 require 'time'
 
-include ApplicationInsights
+include AzureApplicationInsights
 
 class TestTelemetryClient < Test::Unit::TestCase
   def test_initialize
@@ -35,7 +35,7 @@ class TestTelemetryClient < Test::Unit::TestCase
     client, sender = self.create_client
     client.track_page_view 'test', 'http://tempuri.org'
     client.flush
-    expected = '[{"ver":1,"name":"Microsoft.ApplicationInsights.PageView","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"PageViewData","baseData":{"ver":2,"url":"http://tempuri.org","name":"test"}}}]'.gsub!(/__version__/, ApplicationInsights::VERSION)
+    expected = '[{"ver":1,"name":"Microsoft.AzureApplicationInsights.PageView","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"PageViewData","baseData":{"ver":2,"url":"http://tempuri.org","name":"test"}}}]'.gsub!(/__version__/, AzureApplicationInsights::VERSION)
     sender.data_to_send[0].time = 'TIME_PLACEHOLDER'
     actual = sender.data_to_send.to_json
     assert_equal expected, actual
@@ -49,7 +49,7 @@ class TestTelemetryClient < Test::Unit::TestCase
       client.track_exception e
     end
     client.flush
-    expected = '[{"ver":1,"name":"Microsoft.ApplicationInsights.Exception","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"ExceptionData","baseData":{"ver":2,"handledAt":"UserCode","exceptions":[{"id":1,"outerId":0,"typeName":"ArgumentError","message":"Some error","hasFullStack":true,"stack":"STACK_PLACEHOLDER"}]}}}]'.gsub!(/__version__/, ApplicationInsights::VERSION)
+    expected = '[{"ver":1,"name":"Microsoft.AzureApplicationInsights.Exception","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"ExceptionData","baseData":{"ver":2,"handledAt":"UserCode","exceptions":[{"id":1,"outerId":0,"typeName":"ArgumentError","message":"Some error","hasFullStack":true,"stack":"STACK_PLACEHOLDER"}]}}}]'.gsub!(/__version__/, AzureApplicationInsights::VERSION)
     assert_equal 'UserCode', sender.data_to_send[0].data.base_data.handled_at
     assert_operator sender.data_to_send[0].data.base_data.exceptions[0].parsed_stack.count, :>, 0
     assert_equal 'test_track_exception_works_as_expected', sender.data_to_send[0].data.base_data.exceptions[0].parsed_stack[0].method
@@ -65,7 +65,7 @@ class TestTelemetryClient < Test::Unit::TestCase
     client, sender = self.create_client
     client.track_event 'test'
     client.flush
-    expected = '[{"ver":1,"name":"Microsoft.ApplicationInsights.Event","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"EventData","baseData":{"ver":2,"name":"test"}}}]'.gsub!(/__version__/, ApplicationInsights::VERSION)
+    expected = '[{"ver":1,"name":"Microsoft.AzureApplicationInsights.Event","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"EventData","baseData":{"ver":2,"name":"test"}}}]'.gsub!(/__version__/, AzureApplicationInsights::VERSION)
     sender.data_to_send[0].time = 'TIME_PLACEHOLDER'
     actual = sender.data_to_send.to_json
     assert_equal expected, actual
@@ -75,7 +75,7 @@ class TestTelemetryClient < Test::Unit::TestCase
     client, sender = self.create_client
     client.track_metric 'test', 42
     client.flush
-    expected = '[{"ver":1,"name":"Microsoft.ApplicationInsights.Metric","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"MetricData","baseData":{"ver":2,"metrics":[{"name":"test","kind":1,"value":42}]}}}]'.gsub!(/__version__/, ApplicationInsights::VERSION)
+    expected = '[{"ver":1,"name":"Microsoft.AzureApplicationInsights.Metric","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"MetricData","baseData":{"ver":2,"metrics":[{"name":"test","kind":1,"value":42}]}}}]'.gsub!(/__version__/, AzureApplicationInsights::VERSION)
     sender.data_to_send[0].time = 'TIME_PLACEHOLDER'
     actual = sender.data_to_send.to_json
     assert_equal expected, actual
@@ -85,7 +85,7 @@ class TestTelemetryClient < Test::Unit::TestCase
     client, sender = self.create_client
     client.track_trace 'test', Channel::Contracts::SeverityLevel::WARNING
     client.flush
-    expected = '[{"ver":1,"name":"Microsoft.ApplicationInsights.Message","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"MessageData","baseData":{"ver":2,"message":"test","severityLevel":2}}}]'.gsub!(/__version__/, ApplicationInsights::VERSION)
+    expected = '[{"ver":1,"name":"Microsoft.AzureApplicationInsights.Message","time":"TIME_PLACEHOLDER","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"MessageData","baseData":{"ver":2,"message":"test","severityLevel":2}}}]'.gsub!(/__version__/, AzureApplicationInsights::VERSION)
     sender.data_to_send[0].time = 'TIME_PLACEHOLDER'
     actual = sender.data_to_send.to_json
     assert_equal expected, actual
@@ -96,8 +96,8 @@ class TestTelemetryClient < Test::Unit::TestCase
     client, sender = self.create_client
     client.track_request 'test', start_time, '0:00:00:02.0000000','200', true
     client.flush
-    expected = '[{"ver":1,"name":"Microsoft.ApplicationInsights.Request","time":"__time__","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"RequestData","baseData":{"ver":2,"id":"test","startTime":"__time__","duration":"0:00:00:02.0000000","responseCode":"200","success":true}}}]'
-      .gsub!(/__version__/, ApplicationInsights::VERSION)
+    expected = '[{"ver":1,"name":"Microsoft.AzureApplicationInsights.Request","time":"__time__","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"RequestData","baseData":{"ver":2,"id":"test","startTime":"__time__","duration":"0:00:00:02.0000000","responseCode":"200","success":true}}}]'
+      .gsub!(/__version__/, AzureApplicationInsights::VERSION)
       .gsub!(/__time__/, start_time)
     actual = sender.data_to_send.to_json
     assert_equal expected, actual
@@ -108,8 +108,8 @@ class TestTelemetryClient < Test::Unit::TestCase
     client, sender = self.create_client
     client.track_request 'test', start_time, '0:00:00:02.0000000','200', false
     client.flush
-    expected = '[{"ver":1,"name":"Microsoft.ApplicationInsights.Request","time":"__time__","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"RequestData","baseData":{"ver":2,"id":"test","startTime":"__time__","duration":"0:00:00:02.0000000","responseCode":"200","success":false}}}]'
-      .gsub!(/__version__/, ApplicationInsights::VERSION)
+    expected = '[{"ver":1,"name":"Microsoft.AzureApplicationInsights.Request","time":"__time__","sampleRate":100.0,"tags":{"ai.internal.sdkVersion":"rb:__version__"},"data":{"baseType":"RequestData","baseData":{"ver":2,"id":"test","startTime":"__time__","duration":"0:00:00:02.0000000","responseCode":"200","success":false}}}]'
+      .gsub!(/__version__/, AzureApplicationInsights::VERSION)
       .gsub!(/__time__/, start_time)
     actual = sender.data_to_send.to_json
     assert_equal expected, actual

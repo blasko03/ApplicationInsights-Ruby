@@ -4,7 +4,7 @@ require 'yard'
 
 Rake::TestTask.new do |test|
   test.libs << 'test'
-  test.test_files = FileList['test/application_insights.rb']
+  test.test_files = FileList['test/azure_application_insights.rb']
   test.verbose = true
 end
 

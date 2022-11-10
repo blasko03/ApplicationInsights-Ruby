@@ -1,8 +1,8 @@
-require_relative '../../../lib/application_insights/channel/queue_base'
-require_relative '../../../lib/application_insights/channel/sender_base'
+require_relative '../../../lib/azure_application_insights/channel/queue_base'
+require_relative '../../../lib/azure_application_insights/channel/sender_base'
 require 'test/unit'
 
-include ApplicationInsights::Channel
+include AzureApplicationInsights::Channel
 
 class TestQueueBase < Test::Unit::TestCase
   def test_initialize

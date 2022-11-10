@@ -1,12 +1,12 @@
 # How to Contribute
 
-If you're interested in contributing, take a look at the general [contributer's guide](https://github.com/Microsoft/ApplicationInsights-Home/blob/master/CONTRIBUTING.md) first.
+If you're interested in contributing, take a look at the general [contributer's guide](https://github.com/Microsoft/AzureApplicationInsights-Home/blob/master/CONTRIBUTING.md) first.
 
 ## Build Gem
 
-Run ```gem build application_insights.gemspec``` to generate the gem file.
+Run ```gem build azure_application_insights.gemspec``` to generate the gem file.
 
-And you can install the gem to test it locally by running ```gem install application_insights-[version].gem```.
+And you can install the gem to test it locally by running ```gem install azure_application_insights-[version].gem```.
 
 ## Run Test
 
@@ -18,7 +18,7 @@ Run ```rake test```.
 
 This is for repository maintainers only:
 
-1. Create and merge develop->master PR https://github.com/Microsoft/ApplicationInsights-Ruby/compare/master...develop?expand=1
+1. Create and merge develop->master PR https://github.com/Microsoft/AzureApplicationInsights-Ruby/compare/master...develop?expand=1
 2. Checkout latest `master`
     ``` 
     git checkout master
@@ -26,15 +26,15 @@ This is for repository maintainers only:
     ```
 
 3. Remove old gem: `rm *.gem`
-4. [Build gem](https://github.com/Microsoft/ApplicationInsights-Ruby/blob/develop/CONTRIBUTING.md#build-gem) 
-5. Push gem: `gem push application_insights-0.5.5.gem`
-6. Check gem on [rubygems](https://rubygems.org/gems/application_insights)
+4. [Build gem](https://github.com/Microsoft/AzureApplicationInsights-Ruby/blob/develop/CONTRIBUTING.md#build-gem) 
+5. Push gem: `gem push azure_application_insights-0.5.5.gem`
+6. Check gem on [rubygems](https://rubygems.org/gems/azure_application_insights)
 7. Tag code:
     ```
     git tag -a v0.5.5
     git push origin v0.5.5
     ```
-8. Update description of [release](https://github.com/Microsoft/ApplicationInsights-Ruby/releases/edit/v0.5.5) from [CHANGELOG.md](https://github.com/Microsoft/ApplicationInsights-Ruby/blob/master/CHANGELOG.md)
+8. Update description of [release](https://github.com/Microsoft/AzureApplicationInsights-Ruby/releases/edit/v0.5.5) from [CHANGELOG.md](https://github.com/Microsoft/AzureApplicationInsights-Ruby/blob/master/CHANGELOG.md)
 9. Create a branch off `develop` branch
     ```
     git checkout develop
@@ -42,7 +42,7 @@ This is for repository maintainers only:
     git checkout -b releaseUpdates
     git push --set-upstream origin releaseUpdates
     ```
-10. Update version in `/lib/application_insights/version.rb`
+10. Update version in `/lib/azure_application_insights/version.rb`
 11. Create new entry for the next release in `/CHANGELOG.md`
 12. Push changes
     ```
@@ -50,7 +50,7 @@ This is for repository maintainers only:
     git commit -m "post release updates"
     git push
     ```
-13. Submit releaseUpdates->develop PR: https://github.com/Microsoft/ApplicationInsights-Ruby/compare/develop...releaseUpdates?expand=1
+13. Submit releaseUpdates->develop PR: https://github.com/Microsoft/AzureApplicationInsights-Ruby/compare/develop...releaseUpdates?expand=1
 
 ## Contributing
 

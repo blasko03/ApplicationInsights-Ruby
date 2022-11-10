@@ -2,9 +2,9 @@ require 'test/unit'
 require 'mocha/test_unit'
 require 'rack/mock'
 require_relative '../mock_sender'
-require_relative '../../../lib/application_insights/rack/track_request'
+require_relative '../../../lib/azure_application_insights/rack/track_request'
 
-include ApplicationInsights::Rack
+include AzureApplicationInsights::Rack
 
 class TestTrackRequest < Test::Unit::TestCase
 
@@ -95,7 +95,7 @@ class TestTrackRequest < Test::Unit::TestCase
     track_request = TrackRequest.new app, 'key', buffer_size, send_interval
     client = track_request.send(:client)
     # test client initialization
-    assert_equal ApplicationInsights::TelemetryClient, client.class
+    assert_equal AzureApplicationInsights::TelemetryClient, client.class
 
     track_request.call(env)
     client = track_request.send(:client)
@@ -153,30 +153,30 @@ class TestTrackRequest < Test::Unit::TestCase
     env['HTTP_REQUEST_ID'] = 'ab456_1.ea6741a'
     SecureRandom.expects(:base64).with(10).returns('y0NM2eOY/fnQPw==')
     track_request.call(env)
-    assert_equal '|y0NM2eOY/fnQPw==.', env['ApplicationInsights.request.id']
+    assert_equal '|y0NM2eOY/fnQPw==.', env['AzureApplicationInsights.request.id']
 
     # appends to ids with a dot (8 chars)
     env['HTTP_REQUEST_ID'] = '|1234.'
     SecureRandom.expects(:base64).with(5).returns('eXsMFHs=')
     track_request.call(env)
-    assert_equal '|1234.eXsMFHs=_', env['ApplicationInsights.request.id']
+    assert_equal '|1234.eXsMFHs=_', env['AzureApplicationInsights.request.id']
 
     # appends to ids with an underscore (8 chars)
     env['HTTP_REQUEST_ID'] = '|1234_'
     SecureRandom.expects(:base64).with(5).returns('eXsMFHs=')
     track_request.call(env)
-    assert_equal '|1234_eXsMFHs=_', env['ApplicationInsights.request.id']
+    assert_equal '|1234_eXsMFHs=_', env['AzureApplicationInsights.request.id']
 
     # appends a dot if neither a dot or underscore are present (8 chars)
     env['HTTP_REQUEST_ID'] = '|ab456_1.ea6741a'
     SecureRandom.expects(:base64).with(5).returns('eXsMFHs=')
     track_request.call(env)
-    assert_equal '|ab456_1.ea6741a.eXsMFHs=_', env['ApplicationInsights.request.id']
+    assert_equal '|ab456_1.ea6741a.eXsMFHs=_', env['AzureApplicationInsights.request.id']
 
     # generates a stand-alone id if one is not provided (16 chars)
     env.delete('HTTP_REQUEST_ID')
     SecureRandom.expects(:base64).with(10).returns('y0NM2eOY/fnQPw==')
     track_request.call(env)
-    assert_equal '|y0NM2eOY/fnQPw==.', env['ApplicationInsights.request.id']
+    assert_equal '|y0NM2eOY/fnQPw==.', env['AzureApplicationInsights.request.id']
   end
 end
