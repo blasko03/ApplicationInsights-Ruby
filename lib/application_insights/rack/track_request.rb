@@ -122,7 +122,11 @@ module ApplicationInsights
         {
             name: "#{request.request_method} #{request.path}",
             http_method: request.request_method,
-            url: request.url
+            url: request.url,
+            properties: {
+              params: request.params.to_json,
+              requestBody: request.body.to_json
+            }
         }
       end
 
