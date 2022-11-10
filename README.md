@@ -143,7 +143,7 @@ raise Exception, 'Boom!'
 require 'azure_application_insights'
 use AzureApplicationInsights::Rack::TrackRequest, '<YOUR INSTRUMENTATION KEY GOES HERE>', <buffer size>
 # For rails, suggest to set up this middleware in application.rb so that unhandled exceptions from controllers are also collected
-config.middleware.use 'AzureApplicationInsights::Rack::TrackRequest', '<YOUR INSTRUMENTATION KEY GOES HERE>', <buffer size>
+config.middleware.use AzureApplicationInsights::Rack::TrackRequest, '<YOUR INSTRUMENTATION KEY GOES HERE>', <buffer size>
 ```
 
 #### Rerieving the Request-Id value from AzureApplicationInsights ####
