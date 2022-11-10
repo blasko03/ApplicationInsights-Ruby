@@ -18,7 +18,7 @@ Ruby 1.9.3 is currently supported by this gem.
 To install the latest release you can use *gem*.
 
 ```
-$ gem install application_insights
+$ gem install azure_application_insights
 ```
 
 ## Usage ##
