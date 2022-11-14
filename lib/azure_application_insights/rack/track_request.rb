@@ -124,8 +124,8 @@ module AzureApplicationInsights
             http_method: request.request_method,
             url: request.url,
             properties: {
-              params: request.params.to_json,
-              requestBody: request.body.to_json
+              params: request.params.to_json#,
+            #  requestBody: request.body.to_json
             }
         }
       end
