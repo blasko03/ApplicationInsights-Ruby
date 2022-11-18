@@ -119,13 +119,19 @@ module AzureApplicationInsights
       end
 
       def options_hash(request)
+        max_size = 8190
+        begin
+          body = request.body.string[0..max_size]
+        rescue StandardError => e
+          body = 'Error parsing body'
+        end
         {
             name: "#{request.request_method} #{request.path}",
             http_method: request.request_method,
             url: request.url,
             properties: {
-              params: request.params.to_json,
-              requestBody:request.content_type == 'application/json' ? request.body.to_json : ''
+              params: request.params.to_json[0..max_size],
+              requestBody: body
             }
         }
       end
